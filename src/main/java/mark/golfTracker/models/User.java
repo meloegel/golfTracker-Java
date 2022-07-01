@@ -1,12 +1,18 @@
 package mark.golfTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -32,6 +38,10 @@ public class User extends Auditable{
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserRoles> roles = new HashSet<>();
 
     public User() {
     }
@@ -78,6 +88,14 @@ public class User extends Auditable{
 
     public String getPassword() {
         return password;
+    }
+
+    public Set<UserRoles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRoles> roles) {
+        this.roles = roles;
     }
 
     public void setPasswordNoEncrypt(String password)
