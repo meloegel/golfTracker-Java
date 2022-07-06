@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -43,6 +45,10 @@ public class User extends Auditable{
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private List<Round> rounds = new ArrayList<>();
+
     public User() {
     }
 
@@ -52,6 +58,16 @@ public class User extends Auditable{
         this.lastName = lastName;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String username, String firstName, String lastName, String password, String email, Set<UserRoles> roles, List<Round> rounds) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.rounds = rounds;
     }
 
     public long getUserId() {
@@ -114,5 +130,13 @@ public class User extends Auditable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
     }
 }
