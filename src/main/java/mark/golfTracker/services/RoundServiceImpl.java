@@ -77,7 +77,23 @@ public class RoundServiceImpl implements RoundService{
 
     @Override
     public Round update(Round round, long id) {
-        return null;
+        Round newRound = findByRoundId(id);
+        if (newRound.getCourseName() == null) {
+            throw new ResourceNotFoundException("Round with id " + id + " does not exist!");
+        }
+        if (round.getDate() != null){
+            newRound.setDate(round.getDate());
+        }
+        if (round.getTotalScore() != newRound.getTotalScore()) {
+            newRound.setTotalScore(round.getTotalScore());
+        }
+        if (round.getCourseName() != null) {
+            newRound.setCourseName(round.getCourseName());
+        }
+        if (round.getDescription() != null) {
+            newRound.setDescription(round.getDescription());
+        }
+        return roundRepository.save(newRound);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
