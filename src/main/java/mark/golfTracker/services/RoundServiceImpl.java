@@ -19,6 +19,9 @@ public class RoundServiceImpl implements RoundService{
     @Autowired
     private RoundRepository roundRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Round> findAll() {
         List<Round> list = new ArrayList<>();
@@ -54,8 +57,22 @@ public class RoundServiceImpl implements RoundService{
     }
 
     @Override
-    public Round save(Round round) {
-        return null;
+    public Round save(Round round, long userId) {
+        Round newRound = new Round();
+        if (round.getRoundId() !=0){
+            roundRepository.findById(round.getRoundId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Round id " + round.getRoundId() + " not found!"));
+            newRound.setRoundId(round.getRoundId());
+        }
+        newRound.setDate(round.getDate());
+        newRound.setTotalScore(round.getTotalScore());
+        newRound.setCourseName(round.getCourseName());
+        newRound.setDescription(round.getDescription());
+
+        User userInfo = userService.findByUserId(userId);
+        newRound.setUser(userInfo);
+
+        return roundRepository.save(newRound);
     }
 
     @Override
