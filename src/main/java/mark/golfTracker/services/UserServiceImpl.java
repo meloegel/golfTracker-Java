@@ -28,6 +28,12 @@ public class UserServiceImpl implements UserService{
     private HelperFunctions helperFunctions;
 
     @Override
+    public List<User> findAll() {
+        List<User> list = new ArrayList<>();
+        userRepository.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
+    @Override
     public User findByUserId(long id) throws ResourceNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
     }
@@ -36,22 +42,6 @@ public class UserServiceImpl implements UserService{
     public List<User> findByUsernameContaining(String username) {
         return userRepository.findByUsernameContainingIgnoreCase(username.toLowerCase());
     }
-
-    @Override
-    public List<User> findAll() {
-        List<User> list = new ArrayList<>();
-        userRepository.findAll().iterator().forEachRemaining(list::add);
-        return list;
-    }
-
-
-    @Transactional
-    @Override
-    public void delete(long id) {
-        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
-        userRepository.deleteById(id);
-    }
-
 
     @Override
     public User findByUsername(String name) {
@@ -110,10 +100,16 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Transactional
+    @Override
+    public void delete(long id) {
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+        userRepository.deleteById(id);
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
     }
-
 }

@@ -7,9 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 
-public interface RoundRepository  extends CrudRepository<User, Long> {
-    Round findByRoundId(long roundId);
-
+public interface RoundRepository extends CrudRepository<Round, Long> {
     List<Round> findByCourseName(String courseName);
 
     List<Round> findByCourseNameContainingIgnoreCase(String courseName);
