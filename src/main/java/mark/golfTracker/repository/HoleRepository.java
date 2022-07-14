@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 
-public interface HoleRepository extends CrudRepository<User, Long> {
+public interface HoleRepository extends CrudRepository<Hole, Long> {
 
     List<Hole> findByPar(long par);
 
