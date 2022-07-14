@@ -9,7 +9,12 @@ import java.util.List;
 
 
 public interface HoleRepository extends CrudRepository<User, Long> {
-    Hole findByHoleId(long holdId);
+
+    List<Hole> findByPar(long par);
 
     List<Hole> findByRound(Round round);
+
+    List<Hole> findByScore(long score);
+
+    List<Hole> findByPutts(long putts);
 }
