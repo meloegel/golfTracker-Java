@@ -31,7 +31,8 @@ public class RoundServiceImpl implements RoundService{
 
     @Override
     public Round findByRoundId(long id) throws ResourceNotFoundException {
-        return roundRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Round id " + id + " not found!"));
+        return roundRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Round id " + id + " not found!"));
     }
 
     @Override
@@ -52,7 +53,8 @@ public class RoundServiceImpl implements RoundService{
     @Transactional
     @Override
     public void delete(long id) throws ResourceNotFoundException  {
-        roundRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Round id " + id + " not found!"));
+        roundRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Round id " + id + " not found!"));
         roundRepository.deleteById(id);
     }
 

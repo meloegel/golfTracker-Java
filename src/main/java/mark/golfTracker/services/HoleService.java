@@ -17,4 +17,6 @@ public interface HoleService {
     List<Hole> findByPutts(long putts);
 
     List<Hole> findByRound(Round round);
+
+    public void deleteAll();
 }
