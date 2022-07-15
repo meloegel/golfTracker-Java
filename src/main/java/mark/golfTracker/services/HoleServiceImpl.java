@@ -35,22 +35,12 @@ public class HoleServiceImpl implements HoleService {
 
     @Override
     public List<Hole> findByPar(long par) {
-        return null;
-    }
-
-    @Override
-    public List<Hole> findByScore(long score) {
-        return null;
-    }
-
-    @Override
-    public List<Hole> findByPutts(long putts) {
-        return null;
+        return holeRepository.findByPar(par);
     }
 
     @Override
     public List<Hole> findByRound(Round round) {
-        return null;
+        return holeRepository.findByRound(round);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

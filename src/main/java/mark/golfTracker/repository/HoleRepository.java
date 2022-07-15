@@ -13,8 +13,4 @@ public interface HoleRepository extends CrudRepository<Hole, Long> {
     List<Hole> findByPar(long par);
 
     List<Hole> findByRound(Round round);
-
-    List<Hole> findByScore(long score);
-
-    List<Hole> findByPutts(long putts);
 }
