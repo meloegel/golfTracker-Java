@@ -37,4 +37,12 @@ public class UserController {
         User user = userService.findByUserId(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    // Return a user object based on a given username
+    // Link: http://localhost:2019/users/user/name/cinnamon
+    @GetMapping(value="/user/name/{userName}", produces = "application/json")
+    public ResponseEntity<?> getUserByName(@PathVariable String userName) {
+        User user = userService.findByUsername(userName);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
