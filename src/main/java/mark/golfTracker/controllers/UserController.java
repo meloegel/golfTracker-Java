@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,5 +93,21 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    // Deletes a given user along with associated roles
+    // Link: http://localhost:2019/users/user/14
+    // @param id - The primary key of the user you wish to delete
+    @DeleteMapping(value = "/user/{id}")
+    public ResponseEntity<?> deleteByUserId(@PathVariable long id) {
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    // Returns the User record for the currently authenticated user based off of the supplied access token
+    // Link: http://localhost:2019/users/getuserinfo
+    // @param authentication - The authenticated user object provided by Spring Security
+    @GetMapping(value = "/getuserinfo", produces = "application/json")
+    public ResponseEntity<?> getCurrentUserInfo(Authentication authentication) {
+        User user = userService.findByUsername(authentication.getName());
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
