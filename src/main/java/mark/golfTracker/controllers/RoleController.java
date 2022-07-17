@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +27,12 @@ public class RoleController {
         return new ResponseEntity<>(allRoles, HttpStatus.OK);
     }
 
+    // The Role referenced by the given primary key
+    // Link: http://localhost:2019/roles/role/3
+    // @param roleId - The primary key (long) of the role you seek
+    @GetMapping(value = "/role/{roleId}", produces = "application/json")
+    public ResponseEntity<?> getRoleById(@PathVariable Long roleId) {
+        Role role = roleService.findRoleById(roleId);
+        return new ResponseEntity<>(role, HttpStatus.OK);
+    }
 }
