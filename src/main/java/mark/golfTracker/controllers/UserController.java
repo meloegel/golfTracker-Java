@@ -23,7 +23,6 @@ public class UserController {
 
     // Returns a list of all users
     // Link: http://localhost:2019/users/users"
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/users", produces = "application/json")
     public ResponseEntity<?> listAllUsers(){
         List<User> allUsers = userService.findAll();
@@ -43,6 +42,14 @@ public class UserController {
     @GetMapping(value="/user/name/{userName}", produces = "application/json")
     public ResponseEntity<?> getUserByName(@PathVariable String userName) {
         User user = userService.findByUsername(userName);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    // Returns a list of users whose username contains the given substring
+    // Link: http://localhost:2019/users/user/name/like/ci
+    @GetMapping(value = "/user/name/like/{userName}", produces = "application/json")
+    public ResponseEntity<?> searchForUsername(@PathVariable String userName) {
+        List<User> user = userService.findByUsernameContaining(userName);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
