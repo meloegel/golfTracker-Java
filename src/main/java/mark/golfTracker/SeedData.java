@@ -28,9 +28,8 @@ public class SeedData implements CommandLineRunner {
     UserService userService;
     @Transactional
     @Override
-    public void run(String[] args) throws
-            Exception
-    {
+    public void run(String[] args) throws Exception {
+
         userService.deleteAll();
         roleService.deleteAll();
         Role r1 = new Role("admin");
@@ -40,7 +39,6 @@ public class SeedData implements CommandLineRunner {
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
         r3 = roleService.save(r3);
-
 
 
         // admin, data, user 1
@@ -77,7 +75,5 @@ public class SeedData implements CommandLineRunner {
         u6.getRoles().add(new UserRoles(u6, r2));
         u6.getRoles().add(new UserRoles(u6, r3));
         userService.save(u6);
-
-
     }
 }
