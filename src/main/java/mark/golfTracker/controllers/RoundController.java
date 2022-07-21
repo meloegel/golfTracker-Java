@@ -46,4 +46,11 @@ public class RoundController {
         return new ResponseEntity<>(roundList, HttpStatus.OK);
     }
 
+    // Return a round object based on a given courseName
+    // Link: http://localhost:2019/rounds/rounds/courseName/sycamore_hills
+    @GetMapping(value="/rounds/courseName/search/{courseName}", produces = "application/json")
+    public ResponseEntity<?> searchRoundsByCourseName(@PathVariable String courseName) {
+        List<Round> roundList = roundService.searchByCourseName(courseName);
+        return new ResponseEntity<>(roundList, HttpStatus.OK);
+    }
 }
