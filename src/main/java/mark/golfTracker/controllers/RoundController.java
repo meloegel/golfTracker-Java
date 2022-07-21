@@ -3,6 +3,7 @@ package mark.golfTracker.controllers;
 import mark.golfTracker.models.Round;
 import mark.golfTracker.models.User;
 import mark.golfTracker.services.RoundService;
+import mark.golfTracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class RoundController {
     @Autowired
     private RoundService roundService;
 
+    @Autowired
+    private UserService userService;
+
     // Returns a list of all rounds
     // Link: http://localhost:2019/rounds/rounds"
     @GetMapping(value = "/rounds", produces = "application/json")
@@ -38,7 +42,7 @@ public class RoundController {
         return new ResponseEntity<>(round, HttpStatus.OK);
     }
 
-    // Return a round object based on a given courseName
+    // Return a list of rounds based on a given courseName
     // Link: http://localhost:2019/rounds/rounds/courseName/sycamore_hills
     @GetMapping(value="/rounds/courseName/{courseName}", produces = "application/json")
     public ResponseEntity<?> getRoundsByCourseName(@PathVariable String courseName) {
@@ -46,11 +50,20 @@ public class RoundController {
         return new ResponseEntity<>(roundList, HttpStatus.OK);
     }
 
-    // Return a round object based on a given courseName
-    // Link: http://localhost:2019/rounds/rounds/courseName/sycamore_hills
+    // Return a list of rounds based on a given courseName or part of courseName
+    // Link: http://localhost:2019/rounds/rounds/search/courseName/sycam
     @GetMapping(value="/rounds/courseName/search/{courseName}", produces = "application/json")
     public ResponseEntity<?> searchRoundsByCourseName(@PathVariable String courseName) {
         List<Round> roundList = roundService.searchByCourseName(courseName);
+        return new ResponseEntity<>(roundList, HttpStatus.OK);
+    }
+
+    // Return a list of rounds based on a given user
+    // Link: http://localhost:2019/rounds/rounds/user/3
+    @GetMapping(value="/rounds/user/{userId}", produces = "application/json")
+    public ResponseEntity<?> getRoundsByUser(@PathVariable int userId) {
+        User user = userService.findByUserId(userId);
+        List<Round> roundList = roundService.findByUser(user);
         return new ResponseEntity<>(roundList, HttpStatus.OK);
     }
 }
