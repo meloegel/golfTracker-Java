@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +83,15 @@ public class RoundController {
         newRound.setRoundId(0);
         roundService.save(newRound, userId);
         return new ResponseEntity<>("success", HttpStatus.CREATED);
+    }
+
+    // Deletes a given round
+    // Link: http://localhost:2019/rounds/rounds/4
+    // @param id - The primary key of the round you wish to delete
+    @DeleteMapping(value = "/round/{roundId}")
+    public ResponseEntity<?> deleteByRoundId(@PathVariable long roundId) {
+        roundService.delete(roundId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
