@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,6 +84,17 @@ public class RoundController {
         newRound.setRoundId(0);
         roundService.save(newRound, userId);
         return new ResponseEntity<>("success", HttpStatus.CREATED);
+    }
+
+    // update Round given a complete Round Object
+    // Link: http://localhost:2019/rounds/rounds/15
+    // @param updatedRound - A complete Round including
+    // @param roundId  - The primary key of the user you wish to replace.
+    @PutMapping(value = "/rounds/{roundId}", consumes = "application/json")
+    public ResponseEntity<?> updateRound(@Valid @RequestBody Round updatedRound, @PathVariable long roundId) {
+        updatedRound.setRoundId(roundId);
+        roundService.save(updatedRound, updatedRound.getRoundId());
+        return new ResponseEntity<>(updatedRound, HttpStatus.OK);
     }
 
     // Deletes a given round
