@@ -46,8 +46,8 @@ public class RoundController {
     // Returns single round based off id
     // Link: http://localhost:2019/rounds/rounds/4
     @GetMapping(value="/rounds/{roundId}", produces = "application/json")
-    public ResponseEntity<?> findByRoundId(@PathVariable Long userId){
-        Round round = roundService.findByRoundId(userId);
+    public ResponseEntity<?> findByRoundId(@PathVariable Long roundId){
+        Round round = roundService.findByRoundId(roundId);
         return new ResponseEntity<>(round, HttpStatus.OK);
     }
 
