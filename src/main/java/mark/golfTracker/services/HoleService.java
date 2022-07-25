@@ -14,5 +14,7 @@ public interface HoleService {
 
     List<Hole> findByRound(Round round);
 
+    void delete(long id);
+
     public void deleteAll();
 }

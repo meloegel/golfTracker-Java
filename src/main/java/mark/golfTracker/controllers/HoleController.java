@@ -8,6 +8,7 @@ import mark.golfTracker.services.RoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class HoleController {
 
     // Return a list of Holes based on a given par
     // Link: http://localhost:2019/holes/holes/par/3
-    @GetMapping(value="/holes/holes/par/{par}", produces = "application/json")
+    @GetMapping(value="/holes/par/{par}", produces = "application/json")
     public ResponseEntity<?> getHolesByPar(@PathVariable int par) {
         List<Hole> holeList = holeService.findByPar(par);
         return new ResponseEntity<>(holeList, HttpStatus.OK);
@@ -52,11 +53,19 @@ public class HoleController {
 
     // Return a list of all Holes for a Round
     // Link: http://localhost:2019/holes/holes/round/3
-    @GetMapping(value="/holes/holes/round/{roundId}", produces = "application/json")
+    @GetMapping(value="/holes/round/{roundId}", produces = "application/json")
     public ResponseEntity<?> getHolesByRound(@PathVariable int roundId) {
         Round round = roundService.findByRoundId(roundId);
         List<Hole> holeList = holeService.findByRound(round);
         return new ResponseEntity<>(holeList, HttpStatus.OK);
     }
 
+    // Deletes a given hole
+    // Link: http://localhost:2019/holes/holes/4
+    // @param id - The primary key of the hole you wish to delete
+    @DeleteMapping(value = "/holes/{holeId}")
+    public ResponseEntity<?> deleteByHoleId(@PathVariable long holeId) {
+        holeService.delete(holeId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

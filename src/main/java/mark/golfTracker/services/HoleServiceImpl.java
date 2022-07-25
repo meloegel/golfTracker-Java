@@ -43,6 +43,13 @@ public class HoleServiceImpl implements HoleService {
         return holeRepository.findByRound(round);
     }
 
+    @Transactional
+    @Override
+    public void delete(long id) {
+        holeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hole id " + id + " not found!"));
+        holeRepository.deleteById(id);
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void deleteAll() {
