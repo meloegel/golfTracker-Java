@@ -2,6 +2,7 @@ package mark.golfTracker.controllers;
 
 import mark.golfTracker.models.Hole;
 import mark.golfTracker.models.Round;
+import mark.golfTracker.models.User;
 import mark.golfTracker.services.HoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,14 @@ public class HoleController {
     public ResponseEntity<?> findByHoleId(@PathVariable Long holeId){
         Hole hole = holeService.findByHoleId(holeId);
         return new ResponseEntity<>(hole, HttpStatus.OK);
+    }
+
+    // Return a list of Holes based on a given par
+    // Link: http://localhost:2019/holes/holes/par/3
+    @GetMapping(value="/holes/holes/par/{par}", produces = "application/json")
+    public ResponseEntity<?> getHolesByPar(@PathVariable int par) {
+        List<Hole> holeList = holeService.findByPar(par);
+        return new ResponseEntity<>(holeList, HttpStatus.OK);
     }
 
 }
