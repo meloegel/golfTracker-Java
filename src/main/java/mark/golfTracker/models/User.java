@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,17 +32,18 @@ public class User extends Auditable{
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true)
-    private String firstName;
-
-    @Column(nullable = false, unique = true)
-    private String lastName;
-
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
+    @Email
     private String email;
+
+    @Column(unique = true)
+    private String firstName;
+
+    @Column(unique = true)
+    private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
@@ -55,8 +57,8 @@ public class User extends Auditable{
     }
 
     public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
         this.email = email;
     }
 
