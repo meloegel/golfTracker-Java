@@ -24,9 +24,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/",
                         "/h2-console/**",
-                        "/swagger-resources/**",
-                        "/swagger-resource/**",
-                        "/swagger-ui.html",
                         "/v2/api-docs",
                         "/webjars/**",
                         "/createNewUser",
