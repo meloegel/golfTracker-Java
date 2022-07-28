@@ -80,6 +80,7 @@ public class User extends Auditable{
         this.rounds = rounds;
     }
 
+
     public long getUserId() {
         return userId;
     }
@@ -163,4 +164,5 @@ public class User extends Auditable{
 
         return rtnList;
     }
+
 }
